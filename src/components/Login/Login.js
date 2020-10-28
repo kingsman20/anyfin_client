@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import './Login.scss';
+import '../../Styles.scss';
 
 const LOGIN_MUTATION = gql`
   mutation LoginMutation($email: String!, $password: String!) {
@@ -18,7 +18,7 @@ const formSchema = yup.object({
   password: yup.string().required().min(6),
 });
 
-const Login = () => {
+const Login = parentProps => {
   return (
     <Formik
       initialValues={{
@@ -28,13 +28,14 @@ const Login = () => {
       validationSchema={formSchema}
       onSubmit={(values) => {
         console.log(values);
+        parentProps.history.push('/countries')
       }}
     >
       {(props) => (
         <section className='wrapper'>
           <div className='content'>
             <header>
-              <h1>Exchange Rates to SEK</h1>
+              <h1>SEK Exchange Rates Converter</h1>
               <div>
                 <h2>Login to continue</h2>
               </div>

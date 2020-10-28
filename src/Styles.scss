@@ -117,7 +117,61 @@ body {
       }
     }
     .errorText {
-        color: crimson;
+      color: crimson;
+    }
+  }
+  .content-two {
+    max-width: 600px;
+
+    .section-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      .select-dropdown {
+        width: 60%;
+      }
+
+      button {
+        background-color: $login-button;
+        border: unset;
+        color: #fff;
+        transition: background 0.5s;
+        -webkit-transition: background 0.5s;
+        &:hover {
+          background-color: $background-start;
+        }
+      }
+
+      input {
+        padding: 15px;
+        font-size: 13px;
+        border: 1px solid $input-color;
+        background-color: $input-color;
+        border-radius: 50px;
+        transition: border 0.5s;
+        -webkit-tranistion: border 0.5s;
+        &:focus {
+          outline: 0;
+          border-color: $background-end;
+        }
+      }
+    }
+
+    .card {
+      display: flex;
+      align-items: center;
+      /* justify-content: space-evenly; */
+      border: 1px solid #20bdff;
+      border-radius: 40px;
+      margin: 20px;
+      padding: 20px;
+    }
+
+    .card-image {
+      width: 20%;
+      margin-left: 20px;
+      margin-right: 20px;
     }
   }
 }

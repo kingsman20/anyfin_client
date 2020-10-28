@@ -1,5 +1,5 @@
 import { Switch, Route } from 'react-router-dom';
-import Country from './Country/Country';
+import CountrySelector from './Country/Country';
 import Login from './Login/Login';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <div>
       <Switch>
         <Route exact path='/' component={Login} />
-        <Route exact path='/countries' component={Country} />
+        <Route exact path='/countries' component={CountrySelector} />
       </Switch>
     </div>
   );
