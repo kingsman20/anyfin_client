@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
 import gql from 'graphql-tag';
-import { Formik } from 'formik';
-import * as yup from 'yup';
+import { Mutation } from 'react-apollo';
 import '../../Styles.scss';
 
 const LOGIN_MUTATION = gql`
@@ -13,75 +13,65 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const formSchema = yup.object({
-  email: yup.string().email().required(),
-  password: yup.string().required().min(6),
-});
+const Login = (props) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-const Login = parentProps => {
+  const confirm = (data) => {
+    const resData = JSON.stringify(data.LoginUser.token);
+    localStorage.setItem('token', resData);
+    props.history.push('/countries');
+  };
+
   return (
-    <Formik
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      validationSchema={formSchema}
-      onSubmit={(values) => {
-        console.log(values);
-        parentProps.history.push('/countries')
-      }}
-    >
-      {(props) => (
-        <section className='wrapper'>
-          <div className='content'>
-            <header>
-              <h1>SEK Exchange Rates Converter</h1>
-              <div>
-                <h2>Login to continue</h2>
-              </div>
-            </header>
-            <section>
-              <form className='login-form'>
-                <div className='input-group'>
-                  <input
-                    type='email'
-                    id='email'
-                    name='email'
-                    placeholder='Email'
-                    onChange={props.handleChange('email')}
-                    value={props.values.email}
-                    onBlur={props.handleBlur('email')}
-                  />
-                  <div className='errorText'>
-                    {props.touched.email && props.errors.email}
-                  </div>
-                </div>
-                <div>&nbsp;</div>
-                <div className='input-group'>
-                  <input
-                    type='password'
-                    placeholder='Password'
-                    id='password'
-                    name='password'
-                    onChange={props.handleChange('password')}
-                    value={props.values.password}
-                    onBlur={props.handleBlur('password')}
-                  />
-                  <div className='errorText'>
-                    {props.touched.password && props.errors.password}
-                  </div>
-                </div>
-                <div className='input-group'>
-                  <button type='submit' onClick={props.handleSubmit}>
+    <section className='wrapper'>
+      <div className='content'>
+        <header>
+          <h1>SEK Exchange Rates Converter</h1>
+          <div>
+            <h2>Login to continue</h2>
+          </div>
+        </header>
+        <section>
+          <form className='login-form'>
+            <div className='input-group'>
+              <input
+                type='email'
+                id='email'
+                name='email'
+                placeholder='Email'
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
+            </div>
+            <div>&nbsp;</div>
+            <div className='input-group'>
+              <input
+                type='password'
+                placeholder='Password'
+                id='password'
+                name='password'
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
+            </div>
+            <div className='input-group'>
+              <Mutation
+                mutation={LOGIN_MUTATION}
+                variables={{ email, password }}
+                onCompleted={(data) => confirm(data)}
+              >
+                {(postMutation) => (
+                  <button type='button' onClick={postMutation}>
                     Login
                   </button>
-                </div>
-              </form>
-            </section>
-          </div>
+                )}
+              </Mutation>
+            </div>
+          </form>
         </section>
-      )}
-    </Formik>
+      </div>
+    </section>
   );
 };
 
