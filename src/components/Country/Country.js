@@ -22,7 +22,6 @@ const CountrySelector = () => {
   const [options, setOptions] = useState([]);
   const [code, setCode] = useState('');
   const [countries, setCountries] = useState([]);
-  const [codeList, setCodeList] = useState([]);
 
   useEffect(() => {
     setOptions(countryList().getData());
@@ -32,7 +31,6 @@ const CountrySelector = () => {
     variables: { code: code.value },
     onCompleted: () => {
       setCountries((countries) => [...countries, data.countries]);
-      setCodeList((oldArray) => [...oldArray, code]);
     },
   });
 
