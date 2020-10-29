@@ -19,7 +19,8 @@ const Login = (props) => {
 
   const confirm = (data) => {
     const resData = JSON.stringify(data.LoginUser.token);
-    localStorage.setItem('token', resData);
+    const tokenStr = resData.replace(/^"|"$/g, '');
+    localStorage.setItem('token', tokenStr);
     props.history.push('/countries');
   };
 
